@@ -14,6 +14,11 @@
   call dein#add('tpope/vim-repeat')
   call dein#add('tpope/vim-commentary')
   call dein#add('vim-airline/vim-airline-themes')
+  call dein#add('pangloss/vim-javascript')
+  call dein#add('mxw/vim-jsx')
+  call dein#add('neomake/neomake')
+  call dein#add('Shougo/deoplete.nvim')
+  call dein#add('ternjs/tern_for_vim', {'do': 'npm install'}) 
 
   if dein#check_install()
      call dein#install()
@@ -38,13 +43,21 @@ set relativenumber
 set tabstop=4
 set smartcase
 set expandtab
-set shiftwidth=2
+set shiftwidth=4
 set noswapfile
 set cc=79
 set undofile
 set undodir=~/.config/nvim/temp/undodir
 set completeopt-=preview
 
+let g:jsx_ext_required = 0
+let g:neomake_javascript_enabled_makers = ['eslint']
+let g:deoplete#enable_at_startup = 1
+if !exists('g:deoplete#omni#input_patterns')
+  let g:deoplete#omni#input_patterns = {}
+endif
+" let g:deoplete#disable_auto_complete = 1
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
 " Debite
 
@@ -73,6 +86,8 @@ call denite#custom#map('insert','<C-k>','<denite:move_to_previous_line>',
   let g:airline_section_z = '%3p%%'
   let g:airline_section_y = ''
   let g:airline_section_b = ''
+  let g:airline_detect_whitespace=0
+  let g:airline_section_warning=' '
   let g:airline_mode_map = {
         \ '__' : '-',
         \ 'n'  : 'N',
