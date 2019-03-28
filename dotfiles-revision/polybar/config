@@ -1,0 +1,207 @@
+
+[colors]
+color1 = #282a31
+color2 = #544d5c
+color3 = #8b9497
+color4 = #777e81
+color5 = #eff0ed
+secondary = #e60013
+alert = #bd2c40
+
+[bar/top]
+override-redirect = true
+wm-restack = bspwm
+tray-position = right
+tray-padding = 2
+cursor-click = pointer
+cursor-scroll = ns-resize
+fixed-center = true
+module-margin-right = 5
+moudle-margin-left = 5
+border-color = ${colors.color3}
+
+background = ${colors.color1}
+foreground = ${colors.color5}
+
+width = 100%
+height = 21
+line-size = 2
+line-color = #f00
+
+font-0 = Lato:style=Solid:pixelsize=11;1
+font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
+font-2 = FontAwesome5Free:style=Solid:pixelsize=11
+font-3 = FontAwesome5Brands:style=Solid:pixelsize=11
+
+modules-left = xwindow
+modules-center = bspwm
+modules-right = filesystem cpu memory alsa date powermenu
+
+[module/xwindow]
+type = internal/xwindow
+label = %title:0:30:...%
+
+[module/filesystem]
+type = internal/fs
+interval = 25
+
+mount-0 = /
+
+label-mounted = %{F#0a81f5}%mountpoint%%{F-}: %percentage_used%%
+label-unmounted = %mountpoint% not mounted
+label-unmounted-foreground = ${colors.color5}
+
+[module/bspwm]
+type = internal/bspwm
+
+label-focused = %name%
+label-focused-background = ${colors.color2}
+;label-focused-underline= ${colors.color5}
+label-focused-padding = 4
+
+label-occupied = %name%
+label-occupied-padding = 4
+
+label-urgent = %name%!
+label-urgent-background = ${colors.alert}
+label-urgent-padding = 4
+
+label-empty = %name%
+label-empty-foreground = ${colors.color2}
+label-empty-padding = 4
+
+[module/cpu]
+type = internal/cpu
+interval = 2
+format-prefix =  ""
+format-prefix-foreground = ${colors.color5}
+label = %percentage:2%%
+
+[module/memory]
+type = internal/memory
+interval = 2
+format-prefix = " "
+format-prefix-foreground = ${colors.color5}
+;format-underline = #4bffdc
+label = %percentage_used%%
+
+[module/date]
+type = internal/date
+interval = 5
+
+date =
+date-alt = "%Y-%m-%d"
+
+time = %H:%M
+time-alt = %H:%M:%S
+
+format-prefix = 
+format-prefix-foreground = ${colors.color5}
+;format-underline = #0a6cf5
+
+label =  %date% %time%
+
+[module/alsa]
+type = internal/alsa
+
+format-volume = <label-volume> <bar-volume>
+label-volume = 
+label-volume-foreground = ${root.foreground}
+
+format-muted-prefix = " "
+format-muted-foreground = ${colors.color5}
+label-muted = 
+
+bar-volume-width = 10
+bar-volume-foreground-0 = #55aa55
+bar-volume-foreground-1 = #55aa55
+bar-volume-foreground-2 = #55aa55
+bar-volume-foreground-3 = #55aa55
+bar-volume-foreground-4 = #55aa55
+bar-volume-foreground-5 = #f5a70a
+bar-volume-foreground-6 = #ff5555
+bar-volume-gradient = false
+bar-volume-indicator = |
+bar-volume-indicator-font = 2
+bar-volume-fill = ─
+bar-volume-fill-font = 2
+bar-volume-empty = ─
+bar-volume-empty-font = 2
+bar-volume-empty-foreground = ${colors.color5}
+
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = AC
+full-at = 98
+
+format-charging = <animation-charging> <label-charging>
+format-charging-underline = #ffb52a
+
+format-discharging = <animation-discharging> <label-discharging>
+format-discharging-underline = ${self.format-charging-underline}
+
+format-full-prefix = " "
+format-full-prefix-foreground = ${colors.color5}
+format-full-underline = ${self.format-charging-underline}
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-foreground = ${colors.color5}
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-foreground = ${colors.color5}
+animation-charging-framerate = 750
+
+animation-discharging-0 = 
+animation-discharging-1 = 
+animation-discharging-2 = 
+animation-discharging-foreground = ${colors.color5}
+animation-discharging-framerate = 750
+
+
+[module/powermenu]
+type = custom/menu
+
+expand-right = true
+
+format-spacing = 1
+
+label-open = 
+label-open-foreground = ${colors.color5}
+label-close =  cancel
+label-close-foreground = ${colors.color5}
+label-separator = |
+label-separator-foreground = ${colors.color5}
+
+menu-0-0 = reboot
+menu-0-0-exec = menu-open-1
+menu-0-1 = power off
+menu-0-1-exec = menu-open-2
+
+menu-1-0 = cancel
+menu-1-0-exec = menu-open-0
+menu-1-1 = reboot
+menu-1-1-exec = sudo reboot
+
+menu-2-0 = power off
+menu-2-0-exec = sudo poweroff
+menu-2-1 = cancel
+menu-2-1-exec = menu-open-0
+
+[settings]
+screenchange-reload = true
+;compositing-background = xor
+;compositing-background = screen
+;compositing-foreground = source
+;compositing-border = over
+;pseudo-transparency = false
+
+[global/wm]
+margin-top = 5
+margin-bottom = 5
+
+; vim:ft=dosini
