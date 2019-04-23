@@ -1,4 +1,4 @@
-" Setup dein  ---------------------------------------------------------------{{{
+"Setup dein  ---------------------------------------------------------------{{{
   if (!isdirectory(expand("$HOME/.config/nvim/repos/github.com/Shougo/dein.vim")))
     call system(expand("mkdir -p $HOME/.config/nvim/repos/github.com"))
     call system(expand("git clone https://github.com/Shougo/dein.vim $HOME/.config/nvim/repos/github.com/Shougo/dein.vim"))
@@ -22,6 +22,11 @@
     \ 'rev': 'next',
     \ 'build': 'bash install.sh',
     \ })
+  call dein#add('Shougo/denite.nvim')
+  call dein#add('gregsexton/MatchTag')
+  call dein#add('nikvdp/ejs-syntax')
+  call dein#add('morhetz/gruvbox')
+  call dein#add('airblade/vim-gitgutter')
 
 
   if dein#check_install()
@@ -37,12 +42,14 @@ if (has("termguicolors"))
 	set termguicolors
 endif
 
-let base16colorspace=256
+"let base16colorspace=256
 let $NVIM_PYTHON_LOG_FILE="/tmp/nvim_log"
 let $NVIM_PYTHON_LOG_LEVEL="DEBUG"
 
 set background=dark
-colorscheme onedark
+"colorscheme onedark
+colorscheme gruvbox
+
 
 set number
 set relativenumber
@@ -60,15 +67,19 @@ set encoding=utf-8
 set fileencoding=utf-8
 set laststatus=2
 set hidden
+set clipboard=unnamedplus
 
 set completeopt=noinsert,menuone,noselect,
 set cot+=preview
+
+filetype indent on
 
 " Ale Linter
 let g:ale_fixers = {'javascript': ['standard']}
 
 " Airline theme and buffers
-let g:airline_theme='onedark'
+"let g:airline_theme='onedark'
+let g:airline_theme='gruvbox'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#syntastic#enabled = 1
@@ -101,3 +112,26 @@ nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+
+" Denite
+nnoremap  <C-l> :Denite -buffer-name=files -direction=top file/rec<CR>
+" nnoremap  <C-l> :DeniteProjectDir -buffer-name=files -direction=top file_rec/git<CR>
+nnoremap  <C-n> :DeniteProject -direction=top -buffer-name=grep -default-action=quickfix grep:::!<CR>
+
+" -u flag to unrestrict (see ag docs)
+"call denite#custom#alias('source', 'file_rec/git', 'file_rec')
+"call denite#custom#var('file_rec/git', 'command',
+            \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+
+call denite#custom#map(
+    \ 'insert',
+    \ '<Down>',
+    \ '<denite:move_to_next_line>',
+    \ 'noremap'
+    \)
+call denite#custom#map(
+    \'insert',
+    \'<UP>'
+    \,'<denite:move_to_previous_line>',
+    \ 'noremap')
+
