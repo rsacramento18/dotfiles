@@ -41,6 +41,7 @@ Plug 'nvim-lua/completion-nvim'
 Plug 'tpope/vim-fugitive'
 Plug 'gruvbox-community/gruvbox'
 Plug 'sainnhe/gruvbox-material'
+Plug 'Soares/base16.nvim'
 Plug 'itchyny/lightline.vim'
 Plug 'shinchu/lightline-gruvbox.vim'
 Plug 'sheerun/vim-polyglot'
@@ -67,8 +68,10 @@ if exists('+termguicolors')
 endif
 let g:gruvbox_invert_selection='0'
 
-colorscheme gruvbox
+colorscheme gooey
 set background=dark
+
+highlight Pmenu ctermbg=0 guibg=21
 
 if executable('rg')
     let g:rg_derive_root='true'
@@ -83,7 +86,7 @@ let g:netrw_winsize = 25
 let g:netrw_localrmdir='rm -r'
 
 let g:lightline = {}
-let g:lightline.colorscheme = 'gruvbox'
+let g:lightline.colorscheme = 'one'
 
 let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.8 } }
 let $FZF_DEFAULT_OPTS='--reverse'
@@ -145,7 +148,7 @@ nmap <leader>gu :diffget //2<CR>
 nmap <leader>gs :G<CR>
 
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
-lua require'nvim_lsp'.tsserver.setup{ on_attach=require'completion'.on_attach }
-lua require'nvim_lsp'.cssls.setup{ on_attach=require'completion'.on_attach }
+lua require'lspconfig'.tsserver.setup{ on_attach=require'completion'.on_attach }
+lua require'lspconfig'.cssls.setup{ on_attach=require'completion'.on_attach }
 
 
